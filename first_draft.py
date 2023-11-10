@@ -1,5 +1,7 @@
 import random
 import json
+import argparse
+import math
 
 #Anisha's method 
 def start_game():
@@ -28,8 +30,21 @@ def __init__(self, filepath):
 def get_random_word(self):
     return random.choice(self.words)
 
-#Salma's methods 
- def get_feedback(self, guess):
+# Sriyas method
+def check_guess(secret_word, user_guess):
+    feedback = []
+    for i in range(len(secret_word)):
+        if user_guess[i] == secret_word[i]:
+            feedback.append('green')
+        else:
+            feedback.append(None)  
+    for i in range(len(secret_word)):
+        if feedback[i] is None and user_guess[i] in secret_word and user_guess[i] != secret_word[i]:
+            feedback[i] = 'yellow'
+            feedback.extend(['black'] * (len(secret_word) - len(feedback)))
+
+#Salmas Methods
+def get_feedback(self, guess):
         """
         Get feedback for a given word in the Wordle game.
 
@@ -59,4 +74,11 @@ def save_game_state(self, filename="game_state.json"):
         # use json.dump() to save the game state to a JSON file
         with open(filename, "w") as file:
             json.dump(game_state, file)
+            
+     # Sriyas Method
+    def get_user_input():
+                parser = argparse.ArgumentParser(description='Wordle Game - Guess a Letter')
+                parser.add_argument('guess', type=str, help='Enter your letter guess')
+                args = parser.parse_args()
+
 
