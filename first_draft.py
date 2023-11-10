@@ -1,6 +1,7 @@
 import random
+import json
 
-
+#Anisha's method 
 def start_game():
     name = input("Enter your name: ")
     
@@ -16,7 +17,7 @@ def start_game():
     
     return name + "/n" + game_introduction + "/n" + word_gray + "/n" + word_yellow + "/n" + word_green
 
-
+#Aliyah's methods
 def __init__(self, filepath):
     self.words = []
     
@@ -26,3 +27,36 @@ def __init__(self, filepath):
     
 def get_random_word(self):
     return random.choice(self.words)
+
+#Salma's methods 
+ def get_feedback(self, guess):
+        """
+        Get feedback for a given word in the Wordle game.
+
+        Parameters:
+        guess (str): The guessed word.
+
+        Returns:
+         feedback (str): The feedback for the guess.
+        """
+        # check the guessed word against the actual target word 
+        # return feedback (ex: correct vs incorrect vs partial)
+        pass
+    
+def save_game_state(self, filename="game_state.json"):
+        """
+        Save the current game to a JSON file.
+
+        Parameters:
+         filename (str): The name of the file to save the state of the game to. 
+        """
+        game_state = {
+            "word_to_guess": self.word_to_guess,
+            "guesses": self.guesses,
+            # other information 
+        }
+
+        # use json.dump() to save the game state to a JSON file
+        with open(filename, "w") as file:
+            json.dump(game_state, file)
+
