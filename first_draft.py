@@ -1,3 +1,6 @@
+import random
+
+
 def start_game():
     name = input("Enter your name: ")
     
@@ -13,9 +16,6 @@ def start_game():
     
     return name + "/n" + game_introduction + "/n" + word_gray + "/n" + word_yellow + "/n" + word_green
 
-
-
-import random
 
 def __init__(self, filepath):
     self.words = []
