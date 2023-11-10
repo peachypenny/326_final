@@ -15,8 +15,6 @@ def start_game():
 
 
 
-### aliyah's code ###    
-
 import random
 
 def __init__(self, filepath):
