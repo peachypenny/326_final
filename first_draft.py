@@ -13,5 +13,18 @@ def start_game():
     
     return name + "/n" + game_introduction + "/n" + word_gray + "/n" + word_yellow + "/n" + word_green
 
+
+
+### aliyah's code ###    
+
+import random
+
+def __init__(self, filepath):
+    self.words = []
     
+    with open(filepath, 'r', encoding = 'utf-8') as file:
+        for line in file:
+            self.words = [line.split() for word in file if len(word) == 5]
     
+def get_random_word(self):
+    return random.choice(self.words)
