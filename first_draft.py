@@ -63,7 +63,7 @@ def get_feedback(self, guess, word):
         # check the guessed word against the actual target word 
         # return feedback (ex: correct vs incorrect vs partial)
     feedback = []
-    for i in range(len(guess)):
+    for i in range(len(guess)): 
         if guess[i] == word[i]:
             feedback.append('correct')
         elif guess[i] in word:
