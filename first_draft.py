@@ -49,19 +49,28 @@ def check_guess(secret_word, user_guess):
             feedback.extend(['black'] * (len(secret_word) - len(feedback)))
 
 #Salmas Methods
-def get_feedback(self, guess):
+def get_feedback(self, guess, word):
         """
         Get feedback for a given word in the Wordle game.
 
         Parameters:
         guess (str): The guessed word.
+        word (str): The word you need to guess. 
 
         Returns:
          feedback (str): The feedback for the guess.
         """
         # check the guessed word against the actual target word 
         # return feedback (ex: correct vs incorrect vs partial)
-        pass
+    feedback = []
+    for i in range(len(guess)):
+        if guess[i] == word[i]:
+            feedback.append('correct')
+        elif guess[i] in word:
+            feedback.append('misplaced')
+        else:
+            feedback.append('wrong')
+    return feedback
     
 def save_game_state(self, filename="game_state.json"):
         """
