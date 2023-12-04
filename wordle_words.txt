@@ -1,0 +1,10 @@
+adult
+apple 
+blood
+brain
+break
+chair
+child
+clock
+dream
+drink
