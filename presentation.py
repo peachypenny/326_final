@@ -15,6 +15,17 @@ class Player():
 
 
 
+def check_guess(self, secret_word, user_guess):
+       feedback = []
+       for i in range(len(secret_word)):
+           if user_guess[i] == secret_word[i]:
+               feedback.append('green')
+           elif user_guess[i] in secret_word:
+               feedback.append('yellow')
+           else:
+               feedback.append('gray')
+       return feedback
+
 
 
 
