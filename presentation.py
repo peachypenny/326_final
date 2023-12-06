@@ -12,19 +12,31 @@ class Player():
 """
 
 
+class WordleGame:
+    def __init__(self, filepath):
+        self.words = []
+        filepath = ('wordle_words.txt')
+        with open(filepath, 'r', encoding='utf-8') as file:
+            for line in file:
+                word = line.strip()
+                if len(word) == 5:
+                    self.words.append(word)
 
 
+    def get_random_word(self):
+        return random.choice(self.words)
 
-def check_guess(self, secret_word, user_guess):
-       feedback = []
-       for i in range(len(secret_word)):
-           if user_guess[i] == secret_word[i]:
-               feedback.append('green')
-           elif user_guess[i] in secret_word:
-               feedback.append('yellow')
-           else:
-               feedback.append('gray')
-       return feedback
+
+    def check_guess(self, secret_word, user_guess):
+        feedback = []
+        for i in range(len(secret_word)):
+            if user_guess[i] == secret_word[i]:
+                feedback.append('green')
+            elif user_guess[i] in secret_word:
+                feedback.append('yellow')
+            else:
+                feedback.append('gray')
+        return feedback
 
 
 
