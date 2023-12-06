@@ -11,22 +11,28 @@ class Player():
          self.total_score = 0
 """
 
+'''
+.isalpha method was implemented with help from: 
+https://www.w3schools.com/python/ref_string_isalpha.asp
+'''
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def play_round(self):
+       secret_word = self.get_random_word()
+       guessed_correctly = False
+       while not guessed_correctly:
+           user_guess = input("Enter your guess (5 letters): ").lower()
+           if len(user_guess) == 5 and all(char.isalpha() for char in user_guess):
+               feedback = self.check_guess(secret_word, user_guess)
+               print("Feedback:")
+               for f in feedback:
+                   print(f)
+               guessed_correctly = all(color == 'green' for color in feedback)
+               if guessed_correctly:
+                   print("Congratulations!")
+               else:
+                   print("Try again.")
+           else:
+               print("Invalid input. Please enter a 5-letter word.")
 def main():
    name = get_user_info()
   
