@@ -11,6 +11,20 @@ class Player():
          self.total_score = 0
 """
 
+import random
+import argparse
+
+
+              
+def get_user_info():
+   name = input("Enter your name: ")
+   print(f"Hi {name}, welcome to Wordle. Here's how you play the game:")
+   print("You have 6 tries to guess a 5-letter word.")
+   print("If the letter in the guessed word is gray, that means that the letter is not in the word.")
+   print("If the letter in the guessed word is yellow, that means that the letter is in the word but not in the correct position.")
+   print("If the letter in the guessed word is green, that means that the letter is in the correct position.")
+   return name
+
 
 class WordleGame:
     def __init__(self, filepath):
@@ -38,28 +52,29 @@ class WordleGame:
                 feedback.append('gray')
         return feedback
 
+    def play_round(self):
+        secret_word = self.get_random_word()
+        guessed_correctly = False
+        while not guessed_correctly:
+            user_guess = input("Enter your guess (5 letters): ").lower()
+            if len(user_guess) == 5 and all(char.isalpha() for char in user_guess):
+                feedback = self.check_guess(secret_word, user_guess)
+                print("Feedback:")
+                for f in feedback:
+                    print(f)
+                guessed_correctly = all(color == 'green' for color in feedback)
+                if guessed_correctly:
+                    print("Congratulations!")
+                else:
+                    print("Try again.")
+            else:
+                print("Invalid input. Please enter a 5-letter word.")
+
 '''
 .isalpha method was implemented with help from: 
 https://www.w3schools.com/python/ref_string_isalpha.asp
 '''
 
-def play_round(self):
-       secret_word = self.get_random_word()
-       guessed_correctly = False
-       while not guessed_correctly:
-           user_guess = input("Enter your guess (5 letters): ").lower()
-           if len(user_guess) == 5 and all(char.isalpha() for char in user_guess):
-               feedback = self.check_guess(secret_word, user_guess)
-               print("Feedback:")
-               for f in feedback:
-                   print(f)
-               guessed_correctly = all(color == 'green' for color in feedback)
-               if guessed_correctly:
-                   print("Congratulations!")
-               else:
-                   print("Try again.")
-           else:
-               print("Invalid input. Please enter a 5-letter word.")
 
 def main():
     name = get_user_info()
