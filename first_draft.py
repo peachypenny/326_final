@@ -107,3 +107,8 @@ def game_scores(self):
           return "Loser :/"
      else:
           return "Don't give up, you got this!"
+      
+      
+def score_leaderboard(self):
+        leaderboard = f"{name}: {self.get_player_score}"
+        return leaderboard
