@@ -1,7 +1,5 @@
 import random
-import json
 import argparse
-import math
 
 
 class Player():
@@ -12,6 +10,18 @@ class Player():
          self.name = ""
          self.score = 0
          self.total_score = 0
+         
+    def game_scores(self):
+     if set(self.word_to_guess) <= self.guesses:
+          print ("Yay! May need to add f string here as well depending on how we wanna set it up")
+          self.Player.score += 1
+          self.Player.total_score += 1
+          return "Congrats" # do we want to have return + print?
+     elif self.attempts_left == 0:
+          print("Ran out of guesses. --> the word was: EXPR")
+          return "Loser :/"
+     else:
+          return "Don't give up, you got this!"
 
 #Anisha's method 
     def start_game():
@@ -23,6 +33,7 @@ class Player():
         word_green = f"Last but not least, if the letter in the guessed word is green, that means that the letter is in the correct position"  
         return name + "/n" + game_introduction + "/n" + word_gray + "/n" + word_yellow + "/n" + word_green
 
+class WordleGame:
 #Aliyah's methods
 def __init__(self, filepath):
     self.words = []
@@ -62,15 +73,15 @@ def get_feedback(self, guess, word):
         """
         # check the guessed word against the actual target word 
         # return feedback (ex: correct vs incorrect vs partial)
-    feedback = []
-    for i in range(len(guess)): 
-        if guess[i] == word[i]:
-            feedback.append('correct')
-        elif guess[i] in word:
-            feedback.append('misplaced')
+        feedback = []
+        for i in range(len(guess)): 
+            if guess[i] == word[i]:
+                feedback.append('correct')
+            elif guess[i] in word:
+                feedback.append('misplaced')
         else:
             feedback.append('wrong')
-    return feedback
+        return feedback
     
 def save_game_state(self, filename="game_state.json"):
         """
@@ -96,14 +107,4 @@ def get_user_input():
     args = parser.parse_args()
 
 #penelope
-def game_scores(self):
-     if set(self.word_to_guess) <= self.guesses:
-          print ("Yay! May need to add f string here as well depending on how we wanna set it up")
-          self.Player.score += 1
-          self.Player.total_score += 1
-          return "Congrats" # do we want to have return + print?
-     elif self.attempts_left == 0:
-          print("Ran out of guesses. --> the word was: EXPR")
-          return "Loser :/"
-     else:
-          return "Don't give up, you got this!"
+
