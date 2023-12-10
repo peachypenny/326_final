@@ -1,7 +1,5 @@
 import random
-import json
 import argparse
-import math
 
 
 class Player():
@@ -12,6 +10,18 @@ class Player():
          self.name = ""
          self.score = 0
          self.total_score = 0
+         
+    def game_scores(self):
+     if set(self.word_to_guess) <= self.guesses:
+          print ("Yay! May need to add f string here as well depending on how we wanna set it up")
+          self.Player.score += 1
+          self.Player.total_score += 1
+          return "Congrats" # do we want to have return + print?
+     elif self.attempts_left == 0:
+          print("Ran out of guesses. --> the word was: EXPR")
+          return "Loser :/"
+     else:
+          return "Don't give up, you got this!"
 
 #Anisha's method 
     def get_user_info():
@@ -24,6 +34,7 @@ class Player():
         print("If the letter in the guessed word is green, that means that the letter is in the correct position.")
         return name
 
+class WordleGame:
 #Aliyah's methods
 def __init__(self, filepath):
     self.words = []
@@ -63,16 +74,21 @@ def get_feedback(self, guess, word):
         """
         # check the guessed word against the actual target word 
         # return feedback (ex: correct vs incorrect vs partial)
-    feedback = []
-    for i in range(len(guess)): 
-        if guess[i] == word[i]:
-            feedback.append('correct')
-        elif guess[i] in word:
-            feedback.append('misplaced')
+        feedback = []
+        for i in range(len(guess)): 
+            if guess[i] == word[i]:
+                feedback.append('correct')
+            elif guess[i] in word:
+                feedback.append('misplaced')
         else:
             feedback.append('wrong')
-    return feedback
+        return feedback
     
+    
+class ScoreManager:
+    def __init__(self):
+        self.scores = {}
+        
 def save_game_state(self, filename="game_state.json"):
         """
         Save the current game to a JSON file.
@@ -90,6 +106,16 @@ def save_game_state(self, filename="game_state.json"):
         with open(filename, "w") as file:
             json.dump(game_state, file)
             
+  #Sriyas Methods          
+def get_player_score(self, player_name):
+        return self.scores.get(player_name, 0)
+    
+def update_player_score(self, player_name, points):
+        current_score = self.get_player_score(player_name)
+        new_score = current_score + points
+        self.scores[player_name] = new_score
+        self.save_scores()
+            
      # Sriyas Method
 def get_user_input():
     parser = argparse.ArgumentParser(description='Wordle Game - Guess a Letter')
@@ -97,19 +123,4 @@ def get_user_input():
     args = parser.parse_args()
 
 #penelope
-def game_scores(self):
-     if set(self.word_to_guess) <= self.guesses:
-          print ("Yay! May need to add f string here as well depending on how we wanna set it up")
-          self.Player.score += 1
-          self.Player.total_score += 1
-          return "Congrats" # do we want to have return + print?
-     elif self.attempts_left == 0:
-          print("Ran out of guesses. --> the word was: EXPR")
-          return "Loser :/"
-     else:
-          return "Don't give up, you got this!"
-      
-#Anisha
-def score_leaderboard(self):
-        leaderboard = f"{name}: {self.get_player_score}"
-        return leaderboard
+
