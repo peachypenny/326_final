@@ -123,3 +123,9 @@ def get_user_input():
 
 #penelope
 
+
+#Anisha
+def score_leaderboard(self):
+    leaderboard = f"{name}: {self.update_player_score()}"
+    return leaderboard
+    
