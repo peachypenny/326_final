@@ -83,6 +83,11 @@ def get_feedback(self, guess, word):
             feedback.append('wrong')
         return feedback
     
+    
+class ScoreManager:
+    def __init__(self):
+        self.scores = {}
+        
 def save_game_state(self, filename="game_state.json"):
         """
         Save the current game to a JSON file.
@@ -99,6 +104,16 @@ def save_game_state(self, filename="game_state.json"):
         # use json.dump() to save the game state to a JSON file
         with open(filename, "w") as file:
             json.dump(game_state, file)
+            
+  #Sriyas Methods          
+def get_player_score(self, player_name):
+        return self.scores.get(player_name, 0)
+    
+def update_player_score(self, player_name, points):
+        current_score = self.get_player_score(player_name)
+        new_score = current_score + points
+        self.scores[player_name] = new_score
+        self.save_scores()
             
      # Sriyas Method
 def get_user_input():
