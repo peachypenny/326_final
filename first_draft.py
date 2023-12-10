@@ -25,7 +25,6 @@ class Player():
 
 #Anisha's method 
     def get_user_info():
-
         name = input("Enter your name: ")
         print(f"Hi {name}, welcome to Wordle. Here's how you play the game:")
         print("You have 6 tries to guess a 5-letter word.")
