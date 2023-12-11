@@ -134,7 +134,62 @@ class Player:
         else:
             return "Don't give up, you got this!"
         
-        
+#Class WordleGame 
+class WordleGame:
+    
+    
+    
+    def check_guess(self, secret_word, user_guess):
+       """Checks whether a player's guess matches the secret word. The game
+               returns feedback with corresponding colors based on the player's
+               letter guesses.
+               
+	Author: Salma Tagnaouti 
+      
+       Sources:
+           https://replit.com/talk/learn/ANSI-Escape-Codes-in-Python/22803
+           https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
+           In the conditional expression statement under the feedback loop,
+               ANSI escape color codes were used to add color formatting to the
+               guess feedback printed to the console.
+      
+       Args:
+           secret_word (str): The random word that was selected
+           user_guess (str): The player's guessed word.
+
+
+       Returns:
+           list: The colored feedback on the player's guess.
+       """
+      
+       feedback = []
+       for i in range(len(secret_word)):
+           #ANSI escape codes for green, yellow, and gray texts
+           feedback.append('\033[92m' + 'green' + '\033[0m' if user_guess[i] == secret_word[i] else 
+                       '\033[93m' + 'yellow' + '\033[0m' if user_guess[i] in secret_word else
+                       '\033[90m' + 'gray' + '\033[0m')
+       return feedback
+  
+   def check_guess_format(self, user_guess):
+       """Checks if the user's guess matches the expected format.
+	
+	Author: Salma Tagnaouti
+      
+       Args:
+           user_guess (str): The user's guessed word.
+
+
+       Returns:
+           bool: True if the format is valid, False otherwise.
+      
+       """
+      
+       guess_regex = r'^[a-zA-Z]{5}$' 
+       if not re.match(guess_regex, user_guess):
+           return False
+       return True
+
+   
 def main():
    """
    Author: Sriya Kandula
