@@ -16,14 +16,13 @@ def get_user_info():
     Side effects:
         Prints information to the console.
     """
-        name = input("Enter your name: ")
-        print(f"Hi {name}, welcome to Wordle. Here's how you play the game:")
-        print("You have 6 tries to guess a 5-letter word.")
-        print("If the letter in the guessed word is gray, that means that the letter is not in the word.")
-        print("If the letter in the guessed word is yellow, that means that the letter is in the word but not in the correct position.")
-        print("If the letter in the guessed word is green, that means that the letter is in the correct position.")
-        return name
-
+    name = input("Enter your name: ")
+    print(f"Hi {name}, welcome to Wordle. Here's how you play the game:")
+    print("You have 6 tries to guess a 5-letter word.")
+    print("If the letter in the guessed word is gray, that means that the letter is not in the word.")
+    print("If the letter in the guessed word is yellow, that means that the letter is in the word but not in the correct position.")
+    print("If the letter in the guessed word is green, that means that the letter is in the correct position.")
+    return name
 # Score Manager Class
 class ScoreManager:
     def __init__(self):
@@ -134,13 +133,42 @@ class Player:
             return "Loser :/"
         else:
             return "Don't give up, you got this!"
-
-
+        
+        
 def main():
-    #i think sriya did a lot of this, so fill in what you did to! don't wanna take credit for your work - penelope
+   """
+   Author: Sriya Kandula
+   Runs the Wordle game.
+  
+   Side effects:
+       Prints messages to the console with the player's total score after
+           they choose to end the game.
+   """
+   name = get_user_info()
+   score_manager = ScoreManager() 
+   player = Player(name, score_manager)
+
+
+   parser = argparse.ArgumentParser(description='Wordle Game')
+   parser.add_argument('filepath', type=str, default='wordle_words.txt', help='Path to the words file')
+   parser.add_argument('leaderboard_filepath', type=str, default='leaderboard_filepath.csv', help='Path to the leaderboard file')
+   args = parser.parse_args()
+   score_manager.see_leaderboard(args.leaderboard_filepath)
+
+
+   wordle_game = WordleGame(args.filepath)
+
+
+   play_again = 'yes'
+   while play_again.lower() == 'yes':
+       wordle_game.play_round(player)
+       play_again = input("Do you want to play again? (yes/no): ")
+
+
+   score_manager.score_leaderboard()
+   print(f"Thanks for playing, {player.name}! Your total score is: {player.total_score}. Goodbye!")
+
+
+if __name__ == "__main__":
+   main()
     
-    parser.add_argument('leaderboard_filepath', type=str, default='leaderboard.csv', help='Path to the leaderboard file')
-    score_manager.see_leaderboard(args.leaderboard_filepath)
-    #displaying the leaderboard when player is done playing - penelope
-    score_manager.score_leaderboard()
-    print(f"Thanks for playing, {player.name}! Your total score is: {player.total_score}. Goodbye!")
