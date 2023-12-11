@@ -2,6 +2,16 @@ import random
 import argparse
 import pandas as pd
 
+#Anisha's method 
+def get_user_info():
+        name = input("Enter your name: ")
+        print(f"Hi {name}, welcome to Wordle. Here's how you play the game:")
+        print("You have 6 tries to guess a 5-letter word.")
+        print("If the letter in the guessed word is gray, that means that the letter is not in the word.")
+        print("If the letter in the guessed word is yellow, that means that the letter is in the word but not in the correct position.")
+        print("If the letter in the guessed word is green, that means that the letter is in the correct position.")
+        return name
+
 # Score Manager Class
 class ScoreManager:   
     def __init__(self):
@@ -49,15 +59,7 @@ class Player():
         else:
             return "Don't give up, you got this!"
 
-#Anisha's method 
-    def get_user_info():
-        name = input("Enter your name: ")
-        print(f"Hi {name}, welcome to Wordle. Here's how you play the game:")
-        print("You have 6 tries to guess a 5-letter word.")
-        print("If the letter in the guessed word is gray, that means that the letter is not in the word.")
-        print("If the letter in the guessed word is yellow, that means that the letter is in the word but not in the correct position.")
-        print("If the letter in the guessed word is green, that means that the letter is in the correct position.")
-        return name
+
 
 class WordleGame:
 #Aliyah's methods
