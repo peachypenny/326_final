@@ -1,6 +1,6 @@
 import random
 import argparse
-import pandas as py
+import pandas as pd
 
 # Score Manager Class
 class ScoreManager:   
