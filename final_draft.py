@@ -1,6 +1,7 @@
 import random
 import argparse
 import pandas as pd
+import re
 
 #Anisha's method 
 def get_user_info():
@@ -13,41 +14,89 @@ def get_user_info():
         return name
 
 # Score Manager Class
-class ScoreManager:   
+class ScoreManager:
     def __init__(self):
+        """Initializes the ScoreManager object.
+        
+        Side effects:
+            Initializes the attributes for the ScoreManager object.
+        """
         self.scores = {}
+
+    def save_game_state(self):
+        """
+        Prints a message that indicates saving the game state.
+        
+        Side effects:
+            Prints a statement to the console.
+        """
+        print("Saving game state...")
+    
     """
-    Penelope worked on see_leaderboard and update_leaderboard.
+    Penelope worked on see_leaderboard, update_leaderboard, and score_leaderboard.
     Resources I used:
     - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html
     - https://stackoverflow.com/questions/17695456/why-does-python-3-need-dict-items-to-be-wrapped-with-list
     - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html
     """ 
-    def see_leaderboard (self, filepath):
+
+    def see_leaderboard(self, filepath):
+
         try:
             leaderboard_df = pd.read_csv(filepath)
             self.scores = leaderboard_df.set_index('Name')['Score'].to_dict()
         except:
-            print("File wasn't found or other error! Please try again w/ new filepath.")
-    def update_leaderboard (self, filepath, player_name, player_score):
+            print("File wasn't found or other error! Please try again with a new filepath.")
+
+    def update_leaderboard(self, filepath, player_name, player_score):
         self.scores[player_name] = player_score
         self.save_game_state()
         
         leaderboard_df = pd.DataFrame(list(self.scores.items()), columns=['Name', 'Score'])
         leaderboard_df.to_csv(filepath, index=True)
 
-         #someone else did init, save_game_state, update_player_score, score_leaderboard, get_player_score
+    def get_player_score(self, player_name):
+
+        return self.scores.get(player_name, 0)
+
+    def update_player_score(self, player_name, points):
+
+        current_score = self.get_player_score(player_name)
+        new_score = current_score + points
+        self.scores[player_name] = new_score
+        self.save_game_state()  
+
+    def score_leaderboard(self):
+        """Prints a message to generate the leaderboard.
+        
+        Returns:
+             pd.DataFrame: A Pandas DataFrame containing the top 3 scores.
+        """
+        
+        print("Generating leaderboard...")
+        leaderboard_df = pd.DataFrame(list(self.scores.items()), columns=['Name', 'Score'])
+        find_top_3 = sorted(leaderboard_df.values, key=lambda x:x[1], reverse=True)[:3]
+        return pd.DataFrame(find_top_3)
     
-class Player():
-    #penelope
-    """
-    Allows us to track score. To be called on in the game_scores method."""
-    def __init__(self, name):
-         self.name = ""
-         self.score = 0
-         self.total_score = 0
-         
+# Player Class
+class Player:
+
+    def __init__(self, name, score_manager):
+        """Initializes the Player object.
+
+        Args:
+            name (str): The player's name.
+            score_manager (ScoreManager): An instance of the ScoreManager object.
+        
+        Side effects:
+            Initializes attributes for the Person Object.
+        """
+        self.name = name
+        self.score_manager = score_manager
+        self.total_score = 0
+        
     def game_scores(self, word_to_guess, guesses, attempts_left):
+
         if set(word_to_guess) <= guesses:
             print(f"Yay! {self.name}, you guessed the word!")
             self.score_manager.update_player_score(self.name, 1)
