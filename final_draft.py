@@ -109,109 +109,11 @@ class Player:
             return "Don't give up, you got this!"
 
 
-
-class WordleGame:
-#Aliyah's methods
-    def __init__(self, filepath):
-        self.words = []
-        self.winners = []
-    with open(filepath, 'r', encoding = 'utf-8') as file:
-        for line in file:
-            self.words = [line.split() for word in file if len(word) == 5]
-    
-def get_random_word(self):
-    return random.choice(self.words)
-
-# Sriyas method
-def check_guess(secret_word, user_guess):
-    feedback = []
-    for i in range(len(secret_word)):
-        if user_guess[i] == secret_word[i]:
-            feedback.append('green')
-        else:
-            feedback.append(None)  
-    for i in range(len(secret_word)):
-        if feedback[i] is None and user_guess[i] in secret_word and user_guess[i] != secret_word[i]:
-            feedback[i] = 'yellow'
-            feedback.extend(['black'] * (len(secret_word) - len(feedback)))
-
-#Salmas Methods
-def get_feedback(self, guess, word):
-        """
-        Get feedback for a given word in the Wordle game.
-
-        Parameters:
-        guess (str): The guessed word.
-        word (str): The word you need to guess. 
-
-        Returns:
-         feedback (str): The feedback for the guess.
-        """
-        # check the guessed word against the actual target word 
-        # return feedback (ex: correct vs incorrect vs partial)
-        feedback = []
-        for i in range(len(guess)): 
-            if guess[i] == word[i]:
-                feedback.append('correct')
-            elif guess[i] in word:
-                feedback.append('misplaced')
-        else:
-            feedback.append('wrong')
-        return feedback
-    
-    
-class ScoreManager:
-    def __init__(self):
-        self.scores = {}
-        
-def save_game_state(self, filename="game_state.json"):
-        """
-        Save the current game to a JSON file.
-
-        Parameters:
-         filename (str): The name of the file to save the state of the game to. 
-        """
-        game_state = {
-            "word_to_guess": self.word_to_guess,
-            "guesses": self.guesses,
-            # other information 
-        }
-
-        # use json.dump() to save the game state to a JSON file
-        with open(filename, "w") as file:
-            json.dump(game_state, file)
-            
-  #Sriyas Methods          
-def get_player_score(self, player_name):
-        return self.scores.get(player_name, 0)
-    
-def update_player_score(self, player_name, points):
-        current_score = self.get_player_score(player_name)
-        new_score = current_score + points
-        self.scores[player_name] = new_score
-        self.save_scores()
-            
-     # Sriyas Method
-def get_user_input():
-    parser = argparse.ArgumentParser(description='Wordle Game - Guess a Letter')
-    parser.add_argument('guess', type=str, help='Enter your letter guess')
-    args = parser.parse_args()
-
-"""
-#Anisha
-def score_leaderboard(self):
-    leaderboard = f"{name}: {self.update_player_score()}"
-    return leaderboard
-"""
-   
 def main():
     #i think sriya did a lot of this, so fill in what you did to! don't wanna take credit for your work - penelope
-
-    """
-    Delete quotations once you've filled in the rest of the main function:
+    
     parser.add_argument('leaderboard_filepath', type=str, default='leaderboard.csv', help='Path to the leaderboard file')
     score_manager.see_leaderboard(args.leaderboard_filepath)
     #displaying the leaderboard when player is done playing - penelope
     score_manager.score_leaderboard()
     print(f"Thanks for playing, {player.name}! Your total score is: {player.total_score}. Goodbye!")
-    """
