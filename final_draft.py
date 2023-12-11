@@ -23,6 +23,7 @@ def get_user_info():
     print("If the letter in the guessed word is yellow, that means that the letter is in the word but not in the correct position.")
     print("If the letter in the guessed word is green, that means that the letter is in the correct position.")
     return name
+
 # Score Manager Class
 class ScoreManager:
     def __init__(self):
@@ -34,8 +35,7 @@ class ScoreManager:
         self.scores = {}
 
     def save_game_state(self):
-        """
-        Prints a message that indicates saving the game state.
+        """Prints a message that indicates saving the game state.
         
         Side effects:
             Prints a statement to the console.
@@ -43,15 +43,23 @@ class ScoreManager:
         print("Saving game state...")
     
     """
-    Penelope worked on see_leaderboard, update_leaderboard, and score_leaderboard.
+    Penelope worked on see_leaderboard and score_leaderboard.
     Resources I used:
     - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html
     - https://stackoverflow.com/questions/17695456/why-does-python-3-need-dict-items-to-be-wrapped-with-list
-    - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html
     """ 
 
     def see_leaderboard(self, filepath):
+        """Displays the leaderboard containing the players and their scores.
 
+        Args:
+            filepath (str): The path to the csv file containing a table of names
+                and scores.
+        Side effects:
+            Prints to the console if the csv file is not found.
+        Retuns:
+               None
+        """
         try:
             leaderboard_df = pd.read_csv(filepath)
             self.scores = leaderboard_df.set_index('Name')['Score'].to_dict()
@@ -59,14 +67,34 @@ class ScoreManager:
             print("File wasn't found or other error! Please try again with a new filepath.")
 
     def update_leaderboard(self, filepath, player_name, player_score):
+        """Updates the scores of players on the leaderboard.
+        
+        Author: Aliyah Viray
+        Resource: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html
+            Convert a Pandas Dataframe into a CSV.
+        
+        Args:
+            filepath (str): The path to the csv file containing a table of names
+                and scores.
+            player_name (str): The player's name.
+            player_score (int): The player's score.
+        """
         self.scores[player_name] = player_score
         self.save_game_state()
         
         leaderboard_df = pd.DataFrame(list(self.scores.items()), columns=['Name', 'Score'])
         leaderboard_df.to_csv(filepath, index=True)
 
-    def get_player_score(self, player_name):
 
+    def get_player_score(self, player_name):
+        """Retrieves the player's score.
+
+        Args:
+            player_name (str): The player's name.
+
+        Returns:
+            int: The player's score.
+        """
         return self.scores.get(player_name, 0)
 
     def update_player_score(self, player_name, points):
@@ -136,8 +164,47 @@ class Player:
         
 #Class WordleGame 
 class WordleGame:
+    """Represents the Wordle Game.
     
-    
+    Attributes:
+        words (list):
+        filepath (str):
+        
+    """
+    def __init__(self, filepath='wordle_words.txt'):
+        """Initializes the WordleGame class.
+
+        Args:
+            filepath (str, optional): The filepath to the text file containing
+                the words for the game. Defaults to 'wordle_words.txt'.
+        
+        Side effects:
+            Initializes the attributes for the WordleGame object.
+        """
+        self.words = []
+        self.filepath = filepath
+        self.load_words()
+
+    def load_words(self):
+        """Loads the words from our text file and stores them in a list.
+        
+        Author: Aliyah Viray
+        Techniques: `with` statement and list comprehension
+        
+        Side effects:
+            Opens a file, reads a file, and strips the words from file of
+                whitespace. Modifies a list of words if the word has 5 letters.
+        """
+        with open(self.filepath, 'r', encoding='utf-8') as file:
+            self.words = [line.strip() for line in file if len(line.strip()) == 5]
+
+    def get_random_word(self):
+        """Retrieves a random word from the list of words.
+
+        Returns:
+            str: A randomly selected 5-letter word.
+        """
+        return random.choice(self.words)
     
     def check_guess(self, secret_word, user_guess):
        """Checks whether a player's guess matches the secret word. The game
@@ -170,8 +237,8 @@ class WordleGame:
                        '\033[90m' + 'gray' + '\033[0m')
        return feedback
   
-   def check_guess_format(self, user_guess):
-       """Checks if the user's guess matches the expected format.
+    def check_guess_format(self, user_guess):
+        """Checks if the user's guess matches the expected format.
 	
 	Author: Salma Tagnaouti
       
