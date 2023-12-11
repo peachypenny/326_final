@@ -5,6 +5,17 @@ import re
 
 #Anisha's method 
 def get_user_info():
+    """
+    Author: Anisha
+    Gets the user's name and prints the game's instructions.
+
+
+    Returns:
+        name (str): The player's name.
+       
+    Side effects:
+        Prints information to the console.
+    """
         name = input("Enter your name: ")
         print(f"Hi {name}, welcome to Wordle. Here's how you play the game:")
         print("You have 6 tries to guess a 5-letter word.")
@@ -60,6 +71,22 @@ class ScoreManager:
         return self.scores.get(player_name, 0)
 
     def update_player_score(self, player_name, points):
+        """
+        Authors: Anisha and Penelope
+        Updates the player's score after every guess.
+
+
+        Args:
+            player_name (str): The player's name.
+            points (int): The points to add to the player's current score.
+           
+        Side effects:
+            Modifies the player's current score to the new score in the
+                dictionary, `self.scores`.
+        Returns:
+              None
+        """
+
 
         current_score = self.get_player_score(player_name)
         new_score = current_score + points
