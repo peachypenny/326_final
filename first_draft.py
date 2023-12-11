@@ -1,7 +1,32 @@
 import random
 import argparse
 
+# Score Manager Class
+class ScoreManager:   
+    def __init__(self):
+        self.scores = {}
+    """
+    Penelope worked on see_leaderboard and update_leaderboard.
+    Resources I used:
+    - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.set_index.html
+    - https://stackoverflow.com/questions/17695456/why-does-python-3-need-dict-items-to-be-wrapped-with-list
+    - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html
+    """ 
+    def see_leaderboard (self, filepath):
+        try:
+            leaderboard_df = pd.read_csv(filepath)
+            self.scores = leaderboard_df.set_index('Name')['Score'].to_dict()
+        except:
+            print("File wasn't found or other error! Please try again w/ new filepath.")
+    def update_leaderboard (self, filepath, player_name, player_score):
+        self.scores[player_name] = player_score
+        self.save_game_state()
+        
+        leaderboard_df = pd.DataFrame(list(self.scores.items()), columns=['Name', 'Score'])
+        leaderboard_df.to_csv(filepath, index=True)
 
+         #someone else did init, save_game_state, update_player_score, score_leaderboard, get_player_score
+    
 class Player():
     #penelope
     """
@@ -11,17 +36,17 @@ class Player():
          self.score = 0
          self.total_score = 0
          
-    def game_scores(self):
-     if set(self.word_to_guess) <= self.guesses:
-          print ("Yay! May need to add f string here as well depending on how we wanna set it up")
-          self.Player.score += 1
-          self.Player.total_score += 1
-          return "Congrats" # do we want to have return + print?
-     elif self.attempts_left == 0:
-          print("Ran out of guesses. --> the word was: EXPR")
-          return "Loser :/"
-     else:
-          return "Don't give up, you got this!"
+    def game_scores(self, word_to_guess, guesses, attempts_left):
+        if set(word_to_guess) <= guesses:
+            print(f"Yay! {self.name}, you guessed the word!")
+            self.score_manager.update_player_score(self.name, 1)
+            self.total_score += 1
+            return "Congrats"
+        elif attempts_left == 0:
+            print(f"Ran out of guesses. The word was: {word_to_guess}")
+            return "Loser :/"
+        else:
+            return "Don't give up, you got this!"
 
 #Anisha's method 
     def get_user_info():
@@ -35,10 +60,9 @@ class Player():
 
 class WordleGame:
 #Aliyah's methods
-def __init__(self, filepath):
-    self.words = []
-    self.winners = []
-    #penelope - we're gonna need to have more stuff in here, name =/= player?    
+    def __init__(self, filepath):
+        self.words = []
+        self.winners = []
     with open(filepath, 'r', encoding = 'utf-8') as file:
         for line in file:
             self.words = [line.split() for word in file if len(word) == 5]
@@ -121,11 +145,21 @@ def get_user_input():
     parser.add_argument('guess', type=str, help='Enter your letter guess')
     args = parser.parse_args()
 
-#penelope
-
-
+"""
 #Anisha
 def score_leaderboard(self):
     leaderboard = f"{name}: {self.update_player_score()}"
     return leaderboard
-    
+"""
+   
+def main():
+    #i think sriya did a lot of this, so fill in what you did to! don't wanna take credit for your work - penelope
+
+    """
+    Delete quotations once you've filled in the rest of the main function:
+    parser.add_argument('leaderboard_filepath', type=str, default='leaderboard.csv', help='Path to the leaderboard file')
+    score_manager.see_leaderboard(args.leaderboard_filepath)
+    #displaying the leaderboard when player is done playing - penelope
+    score_manager.score_leaderboard()
+    print(f"Thanks for playing, {player.name}! Your total score is: {player.total_score}. Goodbye!")
+    """
