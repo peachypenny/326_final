@@ -26,6 +26,14 @@ def get_user_info():
 
 # Score Manager Class
 class ScoreManager:
+    """
+    Manages the player's scores. Give the functionality to save, update, and retrieve scores.
+    
+    Attributes:
+        scores (dict): A dictionary of the player's scores.
+    
+    """
+        
     def __init__(self):
         """Initializes the ScoreManager object.
         
@@ -101,8 +109,7 @@ class ScoreManager:
     def update_player_score(self, player_name, points):
         """Updates the player's score after every guess.
         
-        Authors: Anisha Bahl
-        Technique: Optional parameters
+
         
         Args:
             player_name (str): The player's name.
@@ -185,7 +192,8 @@ class Player:
 #Class WordleGame 
 class WordleGame:
     """Represents the Wordle Game.
-    
+    Authors: Anisha Bahl
+    Technique: Optional parameters
     Attributes:
         words (list): A list of the guess words from the text file.
         filepath (str): The filepath to the text file containing the words
