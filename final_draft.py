@@ -255,7 +255,73 @@ class WordleGame:
        if not re.match(guess_regex, user_guess):
            return False
        return True
+   
+   def play_round(self, player):
+       """
+       Author: Sriya Kandula
+       Plays a round of the Wordle game.
+      
+       Sources:
+           https://replit.com/talk/learn/ANSI-Escape-Codes-in-Python/22803
+          https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
 
+
+          The green color is applied to specific feedback text indicating correct letter guesses in the player's input, enhancing the visual presentation of the game output.
+
+
+       Args:
+           player (Player): An instance of the Player Object.
+          
+       Side effects:
+           Prints a message to the console based on whether the player guessed
+               the word correctly or incorrectly within the given number of
+               attempts.
+       Returns:
+             None
+       """
+       secret_word = self.get_random_word()
+       guessed_correctly = False
+       attempts_left = 6
+       guesses = set()
+
+
+       while not guessed_correctly and attempts_left > 0:
+           user_guess = input("Enter your guess (5 letters): ").lower()
+          
+           if not self.check_guess_format(user_guess):
+               print("Invalid guess format. Must be 5 letters.")
+               continue
+          
+           if len(user_guess) == 5 and user_guess.isalpha():
+               feedback = self.check_guess(secret_word, user_guess)
+
+
+               for i in range(len(user_guess)):
+                   letter = user_guess[i]
+                   color = feedback[i]
+                   #This checks if the color variable contains the green colored text "green".
+                   if color == '\033[92m' + 'green' + '\033[0m':
+                       guesses.add(letter)
+
+
+               print("Feedback:", end=" ") 
+               for f in feedback:
+                   print(f, end=" ")
+               print()
+              
+               guessed_correctly = all(color == '\033[92m' + 'green' + '\033[0m' for color in feedback)
+
+
+               if guessed_correctly:
+                   print(f"Congratulations, {player.name}! You guessed the word!")
+               else:
+                   attempts_left -= 1
+                   print(f"Attempts left: {attempts_left}")
+           else:
+               print("Invalid input. Please enter a 5-letter word with only alphabetical characters.")
+
+
+       player.game_scores(secret_word, guesses, attempts_left)
    
 def main():
    """
