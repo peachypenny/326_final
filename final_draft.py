@@ -81,6 +81,11 @@ class ScoreManager:
             player_name (str): The player's name.
             player_score (int): The player's score.
         """
+        self.scores[player_name] = player_score
+        self.save_game_state()
+        
+        leaderboard_df = pd.DataFrame(list(self.scores.items()), columns=['Name', 'Score'])
+        leaderboard_df.to_csv(filepath, index=True)
 
     def get_player_score(self, player_name):
         """Retrieves the player's score.
